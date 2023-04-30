@@ -30,7 +30,7 @@ router.get('/:id', async (req, res) => {
       attributes: ['id', 'tag_name'],
       include: [{
         model: Product,
-        attricutes: ['id', 'product_name', 'price',
+        attributes: ['id', 'product_name', 'price',
           'stock', 'category_id'],
       },
       ],
@@ -44,21 +44,34 @@ router.get('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 router.post('/', async (req, res) => {
   try {
-		const dbTagData = await Tag.create({
-			tag_name: req.body.tag_name,
-		});
+    const dbTagData = await Tag.create({
+      tag_name: req.body.tag_name,
+    });
 
-		res.json(dbTagData);
-	} catch (err) {
-		console.log(err);
-		res.status(500).json(err);
-	}
+    res.json(dbTagData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
-router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
+router.put('/:id', async (req, res) => {
+  try {
+    const [rowsAffected, [updatedTag]] = await Tag.update(req.body, {
+      where: { id: req.params.id },
+      returning: true,
+    });
+    if (!rowsAffected) {
+      return res.status(404).json({ message: 'No tag found with this id' });
+    }
+    res.json(updatedTag);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 router.delete('/:id', (req, res) => {
