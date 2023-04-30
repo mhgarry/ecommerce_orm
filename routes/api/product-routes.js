@@ -77,46 +77,60 @@ router.post('/', async (req, res) => {
 
 // update product
 router.put('/:id', async (req, res) => {
-	try {
-		// update product data
-		await Product.update(req.body, {
+  try {
+    // update product data
+    await Product.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
+    // find tags associated with this product
+    const productTags = await ProductTag.findAll({
+      where: { product_id: req.params.id },
+    });
+    // get a list of tag ids
+    const productTagIds = productTags.map(({ tag_id }) => tag_id);
+    // create a list of new tag_ids
+    const newProductTags = req.body.tagIds
+      .filter((tag_id) => !productTags.include(tag_id))
+      .map((tag_id) => ({
+        product_id: req.params.id,
+        tag_id,
+      }));
+    // pick which to remove and replace
+    const productTagsToRemove = productTags
+      .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
+      .map(({ id }) => id);
+
+    // destroy and create to update product tags
+    await Promise.all([
+      ProductTag.destroy({ where: { id: productTagsToRemove } }),
+      ProductTag.bulkCreate(newProductTags),
+    ]);
+    res.status(200).json({ message: 'Product updated!' });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
+router.delete('/:id', async (req, res) => {
+  try {
+    // use product model to find all products with matching id
+    const dbProductData = await Product.destroy({
 			where: {
 				id: req.params.id,
 			},
 		});
-		// find tags associated with this product
-		const productTags = await ProductTag.findAll({
-			where: {product_id: req.params.id}
-		});
-		// get a list of tag ids
-		const productTagIds = productTags.map(({ tag_id }) => tag_id);
-		// create a list of new tag_ids
-		const newProductTags = req.body.tagIds
-		.filter((tag_id) => !productTags.include(tag_id))
-		.map((tag_id) => {
-			return {
-				product_id: req.params.id,
-				tag_id,
-			};
-		});
-		// pick which to remove and replace
-		const productTagsToRemove = productTags
-		.filter(({tag_id}) => !req.body.tagIds.includes(tag_id))
-		.map(({ id }) => id);
+		if (!dbProductData) {
+			return res.status(404).json({ message: 'No product to delete.'});
+		}
+      res.json(dbProductData);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json(err);
+	}
+});
+    // send json response that the category has been deleted
 
-		//destroy and create to update product tags
-		await Promise.all([
-			ProductTag.destroy({ where: {id: productTagsToRemove}}),
-			ProductTag.bulkCreate(newProductTags),
-		]);
-	res.status(200).json({ message: 'Product updated!'});
-} catch (err){
-	console.log(err);
-	res.status(400).json(err);
-}
-});
-router.delete('/products:id', (req, res) => {
-  // delete one product by its `id` value
-});
 
 module.exports = router;
