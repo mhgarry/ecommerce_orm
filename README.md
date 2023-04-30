@@ -12,3 +12,4 @@ https://levelup.gitconnected.com/build-an-express-api-with-sequelize-cli-and-exp
 https://www.bezkoder.com/node-js-express-sequelize-mysql/
 https://medium.com/valtech-ch/setup-a-rest-api-with-sequelize-and-express-js-fae06d08c0a7
 https://www.cloudnweb.dev/2019/08/building-rest-api-using-node-express-and-sequelize/
+https://sequelize.org/docs/v6/core-concepts/model-querying-finders/
