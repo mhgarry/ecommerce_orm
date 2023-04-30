@@ -13,13 +13,13 @@ Category.init(
 			primaryKey: true,
 			autoIncrement: true
 		}
-  },
-	// model configuration options for category_name column
+	// define the category table's name columns
 	category_name: {
 		type: DataTypes.STRING,
 		allowNull: false
 	}
-  {
+},
+{
     sequelize,
     timestamps: false,
     freezeTableName: true,
