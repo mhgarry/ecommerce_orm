@@ -65,26 +65,29 @@ router.post('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
+// update a category by it's 'id' value and a put request body
 router.put('/:id', async (req, res) => {
   try {
-		const [rowsAffected, [updatedCategory]] = await Category.update(
-			req.body ,
-			{where: {
-				id: req.params.id
-			},
-			returning: true // include updated category in the response
-		});
+    const [rowsAffected, [updatedCategory]] = await Category.update(
+      // sets the category_name to be the value of the request body
+			req.body,
+      {
+        where: {
+          id: req.params.id,
+        },
+        returning: true, // include updated category in the response
+      }
+);
 
-	if (!rowsAffected) {
-		res.status(404).json({ message: 'This category id does not exist.'});
-		return;
-	}
-	res.json(updatedCategory);
-	} catch (err) {
-		console.log(err);
-		res.status(500).json(err);
-	}
+    if (!rowsAffected) {
+      res.status(404).json({ message: 'This category id does not exist.' });
+      return;
+    }
+    res.json(updatedCategory);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 router.delete('/:id', (req, res) => {
