@@ -70,14 +70,14 @@ router.put('/:id', async (req, res) => {
   try {
     const [rowsAffected, [updatedCategory]] = await Category.update(
       // sets the category_name to be the value of the request body
-			req.body,
+      req.body,
       {
         where: {
           id: req.params.id,
         },
         returning: true, // include updated category in the response
-      }
-);
+      },
+    );
 
     if (!rowsAffected) {
       res.status(404).json({ message: 'This category id does not exist.' });
@@ -89,9 +89,26 @@ router.put('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-router.delete('/:id', (req, res) => {
-  // delete a category by its `id` value
+// delete a category by it's category 'id' value
+router.delete('/:id', async (req, res) => {
+  try {
+    // Use the category model to find a category with a matching id
+    const dbCategoryData = await Category.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    // if no category is deleted send 404 response
+    if (!dbCategoryData) {
+      res.status(404).json({ message: 'This category id does not exist.' });
+      return;
+    }
+    // send json response that category has been deleted
+    res.json(dbCategoryData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
