@@ -1,4 +1,6 @@
-# E-Commerece RESTful API Service
+# E-Commerce RESTful API Service
+![GET ALL][GET ALL]
+
 ## Table of contents
 1. [Licensing](#licensing)
 2. [Description](#description)
@@ -29,6 +31,8 @@ To install this application a user must clone the repository at https://github.c
 
 ## Usage
 To use E-Commerce RESTful API Service a user must follow the installation instructions and then seed the database and use the 'npm run' command in their command line while inside the application's repository. Then the user can open "Insomnia", create a new route (get,pull, put, delete) and use the specified URL in the apiRoutes code (ex..'localhost:3001/api/tags/post'). For a 'GET' route insomnia will get all the database information for the specified URL. For a POST route the user changes the request body to "JSON" in "Insomnia" and then posts the object they'd like to add to the database. For a "PUT" route the user goes to the URL ID of the product, category, or tag they'd like to update and puts the data they'd like to replace in the request body "JSON" similarly to creating an object. For a "Delete" route a user simply has to run the URL that they want deleted in a "DEL" request to the Insomnia client and it will delete that data. More information about how to use this application can be found in my video demonstration.
+![Seed][seed]
+![Start Server][Start Server]
 
 ## Packages
 - Node.js v18.16.00 
@@ -42,7 +46,10 @@ To use E-Commerce RESTful API Service a user must follow the installation instru
 ## Features
 
 This application is able to test, update, create, delete, and get all CRUD routes from the E-commerce database it is connected to. This application is easily testable and usable with Insomnia and  performs all routes.
-
+![GET][GET]
+![Delete][Delete]
+![POST][Post]
+![PUT][PUT]
 ## Resources
 
 I used Node.js, the NPM packages express, sequelize, nodemon, and dotenv, a mysql database, and the Insomnia.rest client.
@@ -58,7 +65,7 @@ Other developers can contribute to this project by cloning the repository https:
 For any further questions I'm available at mhgarry92@gmail.com
 To view and clone this project's repository as well as view other projects I'm working on visit github.com/mhgarry
 ## Video Demonstration
-
+https://watch.screencastify.com/v/Be6Z2OMq5IVIkyEq57C8
 
 ## sources
 https://medium.com/geekculture/how-i-built-an-e-commerce-api-with-nodejs-express-and-mongodb-part-4-318e3f494611
@@ -73,3 +80,12 @@ https://www.bezkoder.com/node-js-express-sequelize-mysql/
 https://medium.com/valtech-ch/setup-a-rest-api-with-sequelize-and-express-js-fae06d08c0a7
 https://www.cloudnweb.dev/2019/08/building-rest-api-using-node-express-and-sequelize/
 https://sequelize.org/docs/v6/core-concepts/model-querying-finders/
+
+
+[seed]: images/database_seeding.png
+[GET ALL]: images/get_all.png
+[Start Server]: images/start_server.png
+[GET]: images/get_all.png
+[Delete]: images/delete.png
+[Post]: images/post_request.png
+[PUT]: images/put_request.png
