@@ -117,20 +117,20 @@ router.delete('/:id', async (req, res) => {
   try {
     // use product model to find all products with matching id
     const dbProductData = await Product.destroy({
-			where: {
-				id: req.params.id,
-			},
-		});
-		if (!dbProductData) {
-			return res.status(404).json({ message: 'No product to delete.'});
-		}
-      res.json(dbProductData);
-	} catch (err) {
-		console.log(err);
-		res.status(500).json(err);
-	}
+      where: {
+        id: req.params.id,
+      },
+    });
+    if (!dbProductData) {
+      return res.status(404).json({ message: 'No product to delete.' });
+    }
+    res.json(dbProductData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
-    // send json response that the category has been deleted
+// send json response that the category has been deleted
 
 
 module.exports = router;

@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
     });
     // throw error if no categories are found
     res.json(dbCategoryData);
+		console.log(dbCategoryData);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -46,6 +47,7 @@ router.get('/:id', async (req, res) => {
       return;
     }
     res.json(dbCategoryData);
+		console.log(dbCategoryData);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -84,6 +86,7 @@ router.put('/:id', async (req, res) => {
       return;
     }
     res.json(updatedCategory);
+		console.log(updatedCategory);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -105,6 +108,7 @@ router.delete('/:id', async (req, res) => {
     }
     // send json response that category has been deleted
     res.json(dbCategoryData);
+		console.log(dbCategoryData);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
