@@ -3,20 +3,38 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
 
-// get all products
-router.get('/products', (req, res) => {
-  // find all products
-  // be sure to include its associated Category and Tag data
+// use product model to get all products
+router.get('/', async (_req, res) => {
+  try {
+    const dbProductData = await Product.findAll({
+      // product data we're getting from the database
+      attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+      // associated data from the category and tag models
+      include: [{
+        model: Category,
+        attributes: ['id', 'category_name'],
+      },
+      {
+        model: Tag,
+        attributes: ['id', 'tag_name'],
+      },
+      ],
+    });
+    res.json(dbProductData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 // get one product
-router.get('/products:id', (req, res) => {
+router.get('/:id', (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
 });
 
 // create new product
-router.post('/products', (req, res) => {
+router.post('/', (req, res) => {
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -48,7 +66,7 @@ router.post('/products', (req, res) => {
 });
 
 // update product
-router.put('/products:id', (req, res) => {
+router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
     where: {
