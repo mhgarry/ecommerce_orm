@@ -10,3 +10,5 @@ https://dev.to/idmega2000/seeding-data-with-sequelize-1f3o
 https://rupesh94.medium.com/how-to-create-a-model-and-do-the-migration-in-node-js-with-sequelize-js-419bb335999e
 https://levelup.gitconnected.com/build-an-express-api-with-sequelize-cli-and-express-router-963b6e274561
 https://www.bezkoder.com/node-js-express-sequelize-mysql/
+https://medium.com/valtech-ch/setup-a-rest-api-with-sequelize-and-express-js-fae06d08c0a7
+https://www.cloudnweb.dev/2019/08/building-rest-api-using-node-express-and-sequelize/
